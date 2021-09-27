@@ -8,6 +8,9 @@
     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
     <p class="mb-4">DataTables</a>.</p>
 
+    <div class="messages">
+        <p class="ds-none des_msg alert alert-warning"></p>
+    </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
       <div class="card-header py-3">
@@ -50,8 +53,10 @@
                             <td> {{$std->updated_at}} </td>
                             <td>
                                 <a href=' {{route('ajax.edit', $std->id)}} ' class='btn btn-warning updateStudent' data-toggle="modal" data-target="#updateStudent">Edit</a>
-                                {!! Form::open([ 'method'=>'delete', 'route'=>['ajax.destroy', $std->id], 'class'=>'d-inline']) !!}
-                                {!! Form::submit('Delete', ['class'=>'btn btn-danger']) !!}
+
+                                {!! Form::open([ 'method'=>'delete', 'route'=>['ajax.destroy', $std->id], 'class'=>'d-inline delete_form']) !!}
+                                {!! Form::hidden('id', $std->id, ['class'=>'std_ID']) !!}
+                                {!! Form::submit('Delete', ['class'=>'btn btn-danger std_submit']) !!}
                                 {!! Form::close() !!}
                             </td>
                         </tr>

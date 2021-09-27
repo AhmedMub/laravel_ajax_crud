@@ -143,3 +143,44 @@ $(function() {
 
 //################################
 //Delete student
+$(function() {
+    $('.delete_form').on('submit', function (e) {
+
+        e.preventDefault();
+
+        let formData = new FormData($(this)[0]);
+
+        $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+
+        $.ajax({
+            url: $(this).attr('action'),
+            method:'DELETE',
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            cache: false,
+            data: formData,
+
+            success: function(response) {
+                $('.des_msg').fadeIn();
+                $('.des_msg').html(response.success);
+
+                setTimeout(function() {
+
+                    $('.des_msg').fadeOut();
+                }, 4000);
+
+                $('.btn-close').on('click', function () {
+                    location.reload();
+                  });
+            },
+        });
+
+        //delete the tr element after being deleted from DB
+        $(this).parents().eq(1).remove();
+     });
+});

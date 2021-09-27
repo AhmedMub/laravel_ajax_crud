@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Validator;
 use Nette\Utils\Json;
 use PhpParser\Node\Expr\PostDec;
 
+//*Dev Mode Only
+// use Debugbar;
+
+
 class StudentController extends Controller
 {
     /**
@@ -18,6 +22,9 @@ class StudentController extends Controller
     public function index(Student $student)
     {
         $students = Student::all();
+
+        //*DebugBar
+        // DebugBar::info($students);
 
         return view('students.index', compact('students'));
     }
@@ -143,6 +150,12 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+        $student->delete();
+
+        return response()->json([
+            'success' => 'Student Deleted Successfully'
+        ]);
     }
 }
